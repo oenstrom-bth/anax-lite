@@ -1,0 +1,65 @@
+/**
+ * Variables
+ */
+@nav-text-color: #fff;
+@nav-hover-color: #ddd;
+@dropdown-background: #232323;
+@nav-text-decoration: none;
+
+
+.navbar {
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+
+        li {
+            display: block;
+            flex: 1 1 auto;
+            text-align: center;
+            border-right: 1px solid;
+            position: relative;
+
+            &:last-of-type {
+                border-right: none;
+            }
+
+            a {
+                display: block;
+                padding: 20px 0;
+                color: @nav-text-color;
+                text-decoration: @nav-text-decoration;
+
+                &:hover {
+                    color: @nav-hover-color;
+                }
+            }
+
+            ul {
+                display: none;
+            }
+
+            &:hover {
+                &> ul {
+                    position: absolute;
+                    background: @dropdown-background;
+                    display: block;
+                    width: 100%;
+
+                    li {
+                        border: none;
+
+                        &:hover {
+                            &> ul {
+                                right: 100%;
+                                top: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

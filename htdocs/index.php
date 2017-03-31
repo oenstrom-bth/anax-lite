@@ -43,5 +43,8 @@ $app->url->setDefaultsFromConfiguration();
 // Load the routes
 require ANAX_INSTALL_PATH . "/config/route.php";
 
+// Load the navbar (kanske inte bästa sättet...)
+$app->navbar = require ANAX_INSTALL_PATH . "/config/navbar.php";
+
 // Leave to router to match incoming request to routes
 $app->router->handle($app->request->getRoute(), $app->request->getMethod());
