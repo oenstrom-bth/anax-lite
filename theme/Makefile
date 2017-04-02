@@ -39,8 +39,8 @@ help:
 	@egrep "^# target:" Makefile | sed 's/# target: / /g'
 
 
-# target: less-test          - Install css in htdocs/css
-.PHONY: less-test
-less-test:
+# target: less          - Install css in htdocs/css
+.PHONY: less
+less:
 	@$(call HELPTEXT,$@)
 	lessc -clean-css style.less ../htdocs/css/style.min.css

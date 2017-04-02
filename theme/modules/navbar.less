@@ -5,6 +5,8 @@
 @nav-hover-color: #ddd;
 @dropdown-background: #232323;
 @nav-text-decoration: none;
+@active-background: #1a1a1a;
+@nav-hover-background: @active-background;
 
 
 .navbar {
@@ -24,6 +26,14 @@
 
             &:last-of-type {
                 border-right: none;
+            }
+
+            &:hover {
+                background: @nav-hover-background;
+            }
+
+            &.active {
+                background: @active-background;
             }
 
             a {
