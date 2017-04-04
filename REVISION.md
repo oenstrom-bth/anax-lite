@@ -1,6 +1,10 @@
 Revision History
 =======================
 
+2.0.0 (2017-04-04)
+-----------------------
+* Integrated navbar into the framework.
+
 1.2.0 (2017-04-02)
 -----------------------
 * Active menu item style added.

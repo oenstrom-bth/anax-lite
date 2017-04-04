@@ -5,7 +5,7 @@
 
 $app->router->add("", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Hem"]);
-    $app->view->add("take1/navbar");
+    $app->view->add("navbar2/navbar");
     $app->view->add("take1/flash");
     $app->view->add("take1/home");
     $app->view->add("take1/footer");
@@ -16,7 +16,7 @@ $app->router->add("", function () use ($app) {
 
 $app->router->add("about", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Om sidan"]);
-    $app->view->add("take1/navbar");
+    $app->view->add("navbar2/navbar");
     $app->view->add("take1/flash");
     $app->view->add("take1/about");
     $app->view->add("take1/byline");
@@ -28,7 +28,7 @@ $app->router->add("about", function () use ($app) {
 
 $app->router->add("report", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Redovisning"]);
-    $app->view->add("take1/navbar");
+    $app->view->add("navbar2/navbar");
     $app->view->add("take1/flash");
     $app->view->add("take1/report");
     $app->view->add("take1/byline");
@@ -40,7 +40,7 @@ $app->router->add("report", function () use ($app) {
 
 $app->router->add("test", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Teststida"]);
-    $app->view->add("take1/navbar");
+    $app->view->add("navbar2/navbar");
     $app->view->add("take1/flash");
     $app->view->add("take1/test");
     $app->view->add("take1/byline");
