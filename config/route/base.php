@@ -4,51 +4,67 @@
  */
 
 $app->router->add("", function () use ($app) {
-    $app->view->add("take1/header", ["title" => "Hem"]);
-    $app->view->add("navbar2/navbar");
-    $app->view->add("take1/flash");
-    $app->view->add("take1/home");
-    $app->view->add("take1/footer");
+    $data = ["title" => "Hem"];
+    $app->view->add("view/layout", $data, "layout");
 
-    $app->response->setBody([$app->view, "render"])
-                            ->send();
+    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
+    $app->view->add("view/home", ["region" => "main"], "main", 0);
+    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
+
+    $body = $app->view->renderBuffered("layout");
+    $app->response->setBody($body)->send();
 });
 
 $app->router->add("about", function () use ($app) {
-    $app->view->add("take1/header", ["title" => "Om sidan"]);
-    $app->view->add("navbar2/navbar");
-    $app->view->add("take1/flash");
-    $app->view->add("take1/about");
-    $app->view->add("take1/byline");
-    $app->view->add("take1/footer");
+    $data = ["title" => "Om sidan"];
+    $app->view->add("view/layout", $data, "layout");
 
-    $app->response->setBody([$app->view, "render"])
-                            ->send();
+    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
+    $app->view->add("view/about", ["region" => "main"], "main", 0);
+    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
+
+    $body = $app->view->renderBuffered("layout");
+    $app->response->setBody($body)->send();
 });
 
 $app->router->add("report", function () use ($app) {
-    $app->view->add("take1/header", ["title" => "Redovisning"]);
-    $app->view->add("navbar2/navbar");
-    $app->view->add("take1/flash");
-    $app->view->add("take1/report");
-    $app->view->add("take1/byline");
-    $app->view->add("take1/footer");
+    $data = ["title" => "Redovisning"];
+    $app->view->add("view/layout", $data, "layout");
 
-    $app->response->setBody([$app->view, "render"])
-                            ->send();
+    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
+    $app->view->add("view/report", ["region" => "main"], "main", 0);
+    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
+
+    $body = $app->view->renderBuffered("layout");
+    $app->response->setBody($body)->send();
 });
+
+$diceRoute = function ($route = null) use ($app) {
+    $data = ["title" => "Tärningsspel"];
+    $app->view->add("view/layout", $data, "layout");
+
+    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
+    $app->view->add("view/dice", ["region" => "main", "route" => $route], "main", 0);
+    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
+
+    $body = $app->view->renderBuffered("layout");
+    $app->response->setBody($body)->send();
+};
+$app->router->add("dice", $diceRoute);
+$app->router->add("dice/{route}", $diceRoute);
 
 $app->router->add("test", function () use ($app) {
-    $app->view->add("take1/header", ["title" => "Teststida"]);
-    $app->view->add("navbar2/navbar");
-    $app->view->add("take1/flash");
-    $app->view->add("take1/test");
-    $app->view->add("take1/byline");
-    $app->view->add("take1/footer");
+    $data = ["title" => "Testsida"];
+    $app->view->add("view/layout", $data, "layout");
 
-    $app->response->setBody([$app->view, "render"])
-                            ->send();
+    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
+    $app->view->add("view/test", ["region" => "main", "message" => "Hello world"], "main", 0);
+    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
+
+    $body = $app->view->renderBuffered("layout");
+    $app->response->setBody($body)->send();
 });
+
 
 $app->router->add("status", function () use ($app) {
     $data = [

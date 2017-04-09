@@ -19,13 +19,23 @@ return [
             "text" => "Redovisning",
             "route" => "report",
         ],
-        "test" => [
-            "text" => "Test",
-            "route" => "test",
+        "tasks" => [
+            "text" => "Uppgifter",
+            "route" => "#",
             "items" => [
-                "test1" => [
-                    "text" => "Test 1",
-                    "route" => "test/1",
+                "kmom02" => [
+                    "text" => "Kmom02",
+                    "route" => "#",
+                    "items" => [
+                        "session" => [
+                            "text" => "Session",
+                            "route" => "session",
+                        ],
+                        "dice" => [
+                            "text" => "Tärning",
+                            "route" => "dice",
+                        ],
+                    ],
                 ],
                 "test2" => [
                     "text" => "Test 2",

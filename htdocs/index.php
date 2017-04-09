@@ -20,8 +20,9 @@ $app->url      = new \Anax\Url\Url();
 $app->router   = new \Anax\Route\RouterInjectable();
 $app->view     = new \Anax\View\ViewContainer();
 $app->navbar   = new \Oenstrom\Navbar\Navbar();
+$app->session  = new \Oenstrom\Session\Session();
 
-$app->navbar->configure("navbar.php");
+
 // Inject $app into the view container for use in view files.
 $app->view->setApp($app);
 
@@ -43,17 +44,18 @@ $app->url->configure("url.php");
 $app->url->setDefaultsFromConfiguration();
 
 
-$app->style = $app->url->asset("css/style.min.css");
+// $app->style = $app->url->asset("css/style.min.css");
 
-//$app->navbar->setApp($app);
+
+// Update navbar configuration with values from config file.
+$app->navbar->configure("navbar.php");
+// Set the current route in the navbar.
 $app->navbar->setCurrentRoute($app->request->getRoute());
+// Inject url->create into the navbar.
 $app->navbar->setUrlCreator([$app->url, "create"]);
 
 // Load the routes
 require ANAX_INSTALL_PATH . "/config/route.php";
-
-// Load the navbar (kanske inte bästa sättet...)
-//$app->navbar = require ANAX_INSTALL_PATH . "/config/navbar.php";
 
 // Leave to router to match incoming request to routes
 $app->router->handle($app->request->getRoute(), $app->request->getMethod());

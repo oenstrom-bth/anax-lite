@@ -2,11 +2,15 @@
 /**
  * Internal routes.
  */
-$app->router->addInternal("404", function () use ($app) {
-    $app->view->add("take1/header", ["title" => "Home"]);
-    $app->view->add("navbar2/navbar");
-    $app->view->add("take1/404");
-    $app->view->add("take1/footer");
 
-    $app->response->setBody([$app->view, "render"])->send(404);
+$app->router->addInternal("404", function () use ($app) {
+    $data = ["title" => "404 - Hittades ej"];
+    $app->view->add("view/layout", $data, "layout");
+
+    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
+    $app->view->add("view/404", ["region" => "main"], "main", 0);
+    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
+
+    $body = $app->view->renderBuffered("layout");
+    $app->response->setBody($body)->send();
 });

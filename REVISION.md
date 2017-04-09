@@ -1,6 +1,12 @@
 Revision History
 =======================
 
+2.2.0 (2017-04-09)
+-----------------------
+* Integrated session class into the framework.
+* Dice game module.
+* Small improvements (views, etc).
+
 2.0.0 (2017-04-04)
 -----------------------
 * Integrated navbar into the framework.
