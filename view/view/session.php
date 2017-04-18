@@ -27,19 +27,27 @@ if ((isset($_POST["key"]) || isset($_POST["change"])) && isset($_POST["value"]))
     <hr>
 
     <h2>Lägg till eller ändra ett värde</h2>
-    <form method="POST">
-        <p><label for="change">Ändra</label><br>
-        <select id="change" name="change">
-            <option value="none">Välj nyckel</option>
-            <?php foreach ($app->session->getKeys() as $key) : ?>
-                <option value="<?= $key ?>"><?= $key ?></option>
-            <?php endforeach; ?>
-        </select></p>
-        <p><label for="key">Ny nyckel</label><br>
-        <input type="text" name="key" id="key"></p>
-
-        <p><label for="value">Value</label><br>
-        <input type="text" name="value" id="value"></p>
+    <form method="POST" class="form">
+        <div class="form-group">
+            <label for="change">Ändra
+                <select id="change" name="change">
+                    <option value="none">Välj nyckel</option>
+                    <?php foreach ($app->session->getKeys() as $key) : ?>
+                        <option value="<?= $key ?>"><?= $key ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="key">Ny nyckel
+                <input type="text" name="key" id="key">
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="value">Value
+                    <input type="text" name="value" id="value">
+                </label>
+            </div>
         <input class="btn" type="submit" value="Lägg till">
     </form>
 </div>

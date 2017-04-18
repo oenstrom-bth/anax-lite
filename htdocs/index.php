@@ -21,7 +21,17 @@ $app->router   = new \Anax\Route\RouterInjectable();
 $app->view     = new \Anax\View\ViewContainer();
 $app->navbar   = new \Oenstrom\Navbar\Navbar();
 $app->session  = new \Oenstrom\Session\Session();
+$app->cookie   = new \Oenstrom\Session\Cookie();
+$app->db       = new \Anax\Database\DatabaseConfigure();
+$app->form     = new \Oenstrom\Form\Form();
 
+$app->session->start();
+
+$app->db->configure("database.php");
+$app->db->setDefaultsFromConfiguration();
+
+$app->form->setDbConnect([$app->db, "connect"]);
+$app->form->setDbExecuteFetchAll([$app->db, "executeFetchAll"]);
 
 // Inject $app into the view container for use in view files.
 $app->view->setApp($app);

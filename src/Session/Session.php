@@ -69,6 +69,23 @@ class Session
 
 
     /**
+     * Retrieve value if exists in session and then unset it.
+     * @param $key string The key to get from session
+     * @param $default optional The return value if not found
+     * @return string The session variable if present, else $default
+     */
+    public function getOnce($key, $default = false)
+    {
+        if (self::has($key)) {
+            $value = $_SESSION[$key];
+            $this->delete($key);
+            return $value;
+        }
+        return $default;
+    }
+
+
+    /**
      * Destroys the session and sets cookie
      * @return void
      */

@@ -12,8 +12,13 @@ body {
     font-size: @font-size-base;
 }
 
-h1:first-of-type, h2:first-of-type {
+h1:first-of-type, h2:first-of-type, h3:first-of-type {
     margin-top: 0;
+}
+h3 {
+    & + p {
+        margin-top: -10px;
+    }
 }
 
 hr {
@@ -138,11 +143,121 @@ blockquote {
     border: 3px solid @link-color;
     color: @link-color;
     background: transparent;
-    border-radius: 5px;
+    border-radius: 2px;
     text-decoration: none;
+    list-style: none;
     padding: 6px;
 }
-.btn:hover {
+.btn:hover, .btn:focus {
     color: @link-color-hover;
     border-color: @link-color-hover;
+    outline: none;
+}
+
+.hide {
+    display: none;
+}
+
+.nav-wrapper {
+    display: flex;
+
+    .navbar {
+        flex: 1;
+    }
+
+    .user-button {
+        align-self: center;
+        cursor: pointer;
+        color: #fff;
+        position: relative;
+        padding: 10px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        i {
+            font-size: 36px;
+            vertical-align: middle;
+        }
+
+        .user-alternatives {
+            position: absolute;
+            background: #222;
+            top: 57px;
+            right: -20px;
+            white-space: nowrap;
+            width: auto;
+
+            ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+
+                li {
+                    text-align: center;
+                    a {
+                        display: block;
+                        padding: 20px;
+                        text-decoration: none;
+                        color: #fff;
+
+                        &:hover {
+                            color: @link-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.error {
+    color: #d71919;
+}
+.success {
+    color: #0cbd0c;
+}
+
+.sort-wrapper {
+    display: inline-block;
+
+    .sort-icon {
+        text-decoration: none;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 -7px;
+
+        .material-icons {
+            font-size: 30px;
+        }
+    }
+}
+
+.pagination {
+    list-style: none;
+    padding: 0;
+    display: flex;
+
+    li {
+        display: block;
+        border: 1px solid #eee;
+        margin-left: -1px;
+
+        &:first-of-type {
+            margin-left: 0;
+        }
+
+        &.active {
+            background: #eee;
+            pointer-events: none;
+        }
+
+        a {
+            display: block;
+            padding: 5px 10px;
+        }
+    }
 }

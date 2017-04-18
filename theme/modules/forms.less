@@ -1,0 +1,55 @@
+.form {
+    .form-group {
+        width: 100%;
+        max-width: 540px;
+        margin-bottom: 40px;
+        box-sizing: border-box;
+
+        &.full-width {
+            max-width: 100%;
+        }
+
+        &.center {
+            margin-left: auto;
+            margin-right: auto;
+
+            & * {
+                text-align: center;
+            }
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        select {
+            margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            background: transparent;
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            font-size: 20px;
+            padding: 10px 10px 2px;
+            transition: all 500ms;
+
+            &:focus {
+                border-color: @link-color;
+                outline: none;
+            }
+        }
+        .radio-group {
+            display: block;
+            padding-top: 10px;
+        }
+    }
+}

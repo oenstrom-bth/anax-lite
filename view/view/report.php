@@ -48,7 +48,22 @@
     <hr>
 
     <h2 id="kmom03">Kmom03</h2>
-    <p>Redovisningstext för kmom03 här.</p>
+    <h3>Hur kändes det att jobba med PHP PDO, SQL och MySQL?</h3>
+    <p>Det var inga särskilda problem. Har tidigare använt alla fyra. Dock inte så mycket PDO. MySQL och MariaDB har jag använt ett antal gånger tidigare så att jobba med det och göra SQL-uppgiften var inga problem. PDO har jag testat på någon gång tidigare, men det är först nu jag vet hur smidigt det är.</p>
+
+    <h3>Reflektera kring koden du skrev för att lösa uppgifterna, klasser, formulär, integration Anax Lite?</h3>
+    <p>Jag gjorde en ny PHP-fil för routes till login-sidor och admin-sidor. Där i kontrolleras det om man är inloggad och om man är bannad eller ej. Admin-sidorna kan man endast komma åt om man har rätt behörighet.</p>
+    <p>För att hantera användare gjorde jag två klasser, en klass som representerar just en användare och en klass som hanterar kopplingen med databasen. Strukturen tycker jag blev ganska bra vilket gjorde att jag kunde återanvända samma formulär till att ändra sin profil och att ändra någon annans profil som admin. Jag lyckades också hålla vyerna rena och “dumma”, vilket blev bra.</p>
+    <p>Jag testade också att göra en forumlärklass för att hantera validering av formulär. Klassen har en metod för att kolla att alla fält är ifyllda som ska vara ifyllda och en validate-metod för att validera vissa fält. Valideringsmetoden kontrollerar att användarnamnet är unikt, att e-postadressen är unik, att e-postadressen är giltig, att lösenordet är korrekt och att fälten för det nya lösenordet stämmer överens.</p>
+    <p>Då det blev väldigt ont om tid så är formulärklassen inte den bästa, men den fungerar. Strukturen överlag hade jag också gärnat jobba mycket mer på. Förbättra och finslipa klasserna hade jag också velat ha mer tid till. Men som sagt, det blev ont om tid mot slutet.</p>
+    <p>Vill du logga in på sidan kan du använda användarnamnet ‘admin’ med lösenordet ‘password’. Resterande användare hittar du på sidan när du är inloggad som admin och alla använder lösenordet ‘password’.</p>
+
+    <h3>Känner du dig hemma i ramverket, dess komponenter och struktur?</h3>
+    <p>Hemma är väl att ta i än så länge. Då det har tagit ganska lång tid att göra uppgifterna har det varit svårt att hinna komma in i ramverket så mycket som jag skulle vilja. Men det har ändå gått ganska bra och jag känner att jag börjar komma in i ramverket och strukturen allt mer och mer.</p>
+
+    <h3>Hur bedömer du svårighetsgraden på kursens inledande kursmoment, känner du att du lär dig något/bra saker?</h3>
+    <p>Svårighetsgraden tycker jag har varit bra. Det har dock varit väldigt mycket att göra. Jag har lärt mig mycket bra saker men känner att det har varit för lite tid för att verkligen lära mig så mycket som möjligt. Mot slutet fick jag skynda mig igenom resten för att hinna bli klar innan nästa kursmoment.</p>
+    <p>Kort sagt, det svåraste har varit att hinna göra allt och göra det bra. Jag har inte riktigt hunnit finslipa på sakerna som jag brukar göra.</p>
 
     <hr>
 

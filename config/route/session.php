@@ -3,7 +3,6 @@
  * Session routes
  */
 $sessionCallback = function () use ($app) {
-    $app->session->start();
     $data = ["title" => "Session"];
     $app->view->add("view/layout", $data, "layout");
 
@@ -21,21 +20,18 @@ $app->router->add("session/dump", $sessionCallback);
 
 
 $app->router->add("session/increment", function () use ($app) {
-    $app->session->start();
     $app->session->set("number", $app->session->get("number") + 1);
     header("Location: " . $app->url->create("session"));
     exit;
 });
 
 $app->router->add("session/decrement", function () use ($app) {
-    $app->session->start();
     $app->session->set("number", $app->session->get("number") - 1);
     header("Location: " . $app->url->create("session"));
     exit;
 });
 
 $app->router->add("session/status", function () use ($app) {
-    $app->session->start();
     $data = [
         "session_id" => session_id(),
         "session_cache_expire" => session_cache_expire(),
@@ -47,7 +43,6 @@ $app->router->add("session/status", function () use ($app) {
 });
 
 $app->router->add("session/destroy", function () use ($app) {
-    $app->session->start();
     $app->session->destroy();
     header("Location: " . $app->url->create("session/dump"));
     exit;

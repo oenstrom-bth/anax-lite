@@ -1,0 +1,27 @@
+.table-wrapper {
+    overflow-x: scroll;
+}
+.table {
+    width: 100%;
+    overflow: scroll;
+
+    &.center {
+        text-align: center;
+    }
+
+    thead {
+        border-bottom: 1px solid #ddd;
+    }
+
+    tbody {
+        tr:nth-of-type(odd) {
+            background: #eee;
+        }
+    }
+
+    th, td {
+        padding: 15px 5px;
+        min-width: 24px;
+        white-space: nowrap;
+    }
+}
