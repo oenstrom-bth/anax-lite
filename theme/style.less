@@ -10,6 +10,7 @@ body {
     color: @text-color;
     font-family: @font-family-sans-serif;
     font-size: @font-size-base;
+    line-height: 1.4;
 }
 
 h1:first-of-type, h2:first-of-type, h3:first-of-type {
@@ -19,6 +20,12 @@ h3 {
     & + p {
         margin-top: -10px;
     }
+}
+h4.post-meta {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: -15px;
 }
 
 hr {
@@ -83,8 +90,40 @@ a:hover {
 
 .inner-wrapper-main {
     padding: 20px;
-}
 
+    .main {
+        .make-column(12);
+
+        &.has-sidebar-left, &.has-sidebar-right {
+            .make-column(8);
+        }
+        &.has-sidebar-left.has-sidebar-right {
+            .make-column(6);
+        }
+    }
+
+    .sidebar {
+        .make-column(4);
+
+        &.has-sidebar-left.has-sidebar-right {
+            .make-column(3);
+        }
+    }
+}
+.blog-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    .blog-post {
+        flex: 0 0 98%;
+        box-sizing: border-box;
+        margin: 20px 1%;
+
+    }
+}
+.center {
+    text-align: center;
+}
 .outer-wrapper-footer {
     background-color: @dark-background;
     color: @black-20;
@@ -140,13 +179,13 @@ blockquote {
 
 .btn {
     display: inline-block;
-    border: 3px solid @link-color;
+    border: 2px solid @link-color;
     color: @link-color;
     background: transparent;
-    border-radius: 2px;
     text-decoration: none;
     list-style: none;
-    padding: 6px;
+    padding: 8px 12px;
+    margin-bottom: 5px;
 }
 .btn:hover, .btn:focus {
     color: @link-color-hover;
@@ -214,11 +253,15 @@ blockquote {
     }
 }
 
+.error, .success {
+    padding: 10px;
+    color: #fff;
+}
 .error {
-    color: #d71919;
+    background-color: #F44336;
 }
 .success {
-    color: #0cbd0c;
+    background-color: #4CAF50;
 }
 
 .sort-wrapper {
@@ -233,6 +276,13 @@ blockquote {
         .material-icons {
             font-size: 30px;
         }
+    }
+}
+
+.read-more {
+    display: block;
+    .material-icons {
+        vertical-align: middle;
     }
 }
 
@@ -258,6 +308,22 @@ blockquote {
         a {
             display: block;
             padding: 5px 10px;
+        }
+    }
+}
+
+@media (min-width: 700px) {
+    .blog-wrapper {
+        .blog-post {
+            flex: 0 0 48%;
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    .blog-wrapper {
+        .blog-post {
+            flex: 0 0 31.3333%;
         }
     }
 }

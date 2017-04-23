@@ -37,9 +37,27 @@ return [
                         ],
                     ],
                 ],
-                "test2" => [
-                    "text" => "Test 2",
-                    "route" => "test/2",
+                "kmom04" => [
+                    "text" => "Kmom04",
+                    "route" => "#",
+                    "items" => [
+                        "textfilter" => [
+                            "text" => "Textfilter",
+                            "route" => "textfilter",
+                        ],
+                        "blog" => [
+                            "text" => "Blogg",
+                            "route" => "blog",
+                        ],
+                        "page" => [
+                            "text" => "DB-sida",
+                            "route" => "page/content-test-page",
+                        ],
+                        "block" => [
+                            "text" => "Sida med block",
+                            "route" => "page-with-block",
+                        ],
+                    ],
                 ],
                 "test3" => [
                     "text" => "Test 3",

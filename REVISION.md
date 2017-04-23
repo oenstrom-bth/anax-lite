@@ -1,6 +1,13 @@
 Revision History
 =======================
 
+4.0.0 (2017-04-23)
+-----------------------
+* Content module.
+* TextFilter module.
+* View improvements.
+* Other small improvements.
+
 3.0.0 (2017-04-17)
 -----------------------
 * Database class.

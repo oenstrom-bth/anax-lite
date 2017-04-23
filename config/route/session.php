@@ -2,35 +2,38 @@
 /**
  * Session routes
  */
+
+/**
+ * Route for session start page and dump page.
+ */
 $sessionCallback = function () use ($app) {
-    $data = ["title" => "Session"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/session", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/session", ["title" => "Session"]);
 };
-
 $app->router->add("session", $sessionCallback);
-
 $app->router->add("session/dump", $sessionCallback);
 
 
+/**
+ * Route for session increment.
+ */
 $app->router->add("session/increment", function () use ($app) {
     $app->session->set("number", $app->session->get("number") + 1);
-    header("Location: " . $app->url->create("session"));
-    exit;
+    $app->redirect("session");
 });
 
+
+/**
+ * Route for session decrement.
+ */
 $app->router->add("session/decrement", function () use ($app) {
     $app->session->set("number", $app->session->get("number") - 1);
-    header("Location: " . $app->url->create("session"));
-    exit;
+    $app->redirect("session");
 });
 
+
+/**
+ * Route for session status.
+ */
 $app->router->add("session/status", function () use ($app) {
     $data = [
         "session_id" => session_id(),
@@ -42,8 +45,11 @@ $app->router->add("session/status", function () use ($app) {
     $app->response->sendJson($data);
 });
 
+
+/**
+ * Route for session destroy.
+ */
 $app->router->add("session/destroy", function () use ($app) {
     $app->session->destroy();
-    header("Location: " . $app->url->create("session/dump"));
-    exit;
+    $app->redirect("session/dump");
 });

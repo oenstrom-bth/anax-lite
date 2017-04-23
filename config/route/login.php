@@ -23,15 +23,7 @@ $app->router->add("login", function () use ($app) {
         $app->redirect("login");
     }
 
-    $data = ["title" => "Logga in"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("login/login", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("login/login", ["title" => "Logga in"]);
 });
 
 
@@ -56,15 +48,7 @@ $app->router->add("register", function () use ($app) {
         $app->session->set("message", ["success", "Ditt konto har skapats."]);
     }
 
-    $data = ["title" => "Registrera användare"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/register", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/register", ["title" => "Registrera användare"]);
 });
 
 
@@ -103,15 +87,10 @@ $app->router->add("user/**", function () use ($app) {
  * Route for displaying user profile.
  */
 $app->router->add("user/profile", function () use ($app) {
-    $data = ["title" => "Min profil"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("login/profile", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    if ($app->user->get("authority") === "admin") {
+        $app->redirect("user/admin/profile");
+    }
+    $app->renderPage("login/profile", ["title" => "Min profil"]);
 });
 
 
@@ -132,16 +111,10 @@ $app->router->add("user/edit", function () use ($app) {
         $app->redirect("user/edit");
     }
 
-    $data = ["title" => "Redigera min profil"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("login/edit-user", ["region" => "main", "user" => $app->user], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("login/edit-user", ["title" => "Redigera profil", "user" => $app->user]);
 });
+
+
 
 
 /**
@@ -151,6 +124,12 @@ $app->router->add("user/admin/**", function () use ($app) {
     if ($app->user->get("authority") !== "admin") {
         $app->redirect("user/profile");
     }
+    $app->view->add("admin/nav", ["region" => "before-main"], "before-main", 0);
+});
+
+
+$app->router->add("user/admin/profile", function () use ($app) {
+    $app->renderPage("login/profile", ["title" => "Min profil"]);
 });
 
 
@@ -175,15 +154,7 @@ $app->router->add("user/admin/new", function () use ($app) {
         $app->session->set("message", ["success", "Ditt konto har skapats."]);
     }
 
-    $data = ["title" => "Registrera användare"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/register", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/register", ["title" => "Registrera användare"]);
 });
 
 
@@ -197,15 +168,12 @@ $displayUsers = function ($search = ":all", $order = "username:asc", $page = 1, 
     $userAuth = new \Oenstrom\User\UserAuth($app->db, $app->form);
     $res = $userAuth->displayUsers($search, $order, $page, $hits);
 
-    $data = ["title" => "Alla medlemmar"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("login/user-table", ["region" => "main", "users" => $res["users"], "route" => $res["route"], "nrOfPages" => $res["nrOfPages"]], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("login/user-table", [
+        "title" => "Alla medlemmar",
+        "users" => $res["users"],
+        "route" => $res["route"],
+        "nrOfPages" => $res["nrOfPages"],
+    ], "admin");
 };
 $app->router->add("user/admin/users", $displayUsers);
 $app->router->add("user/admin/users/{search}/{order}/{page}/{hits}", $displayUsers);
@@ -228,15 +196,7 @@ $app->router->add("user/admin/edit/{username}", function ($username) use ($app) 
         $app->redirect("user/admin/edit/{$user->get("username")}");
     }
 
-    $data = ["title" => "Redigera en användare"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("login/edit-user", ["region" => "main", "user" => $user], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("login/edit-user", ["title" => "Redigera en användare", "user" => $user]);
 });
 
 
@@ -258,4 +218,55 @@ $app->router->add("user/admin/block/{username}", function ($username) use ($app)
     $userAuth = new \Oenstrom\User\UserAuth($app->db, $app->form);
     $userAuth->handleBlock($username, $app->user->get("username"));
     $app->redirect("user/admin/edit/$username");
+});
+
+
+/**
+ * Route for all admin content routes.
+ */
+$app->router->add("user/admin/content/**", function () use ($app) {
+    $app->contentDao = new \Oenstrom\Content\ContentDao($app->db);
+});
+
+
+/**
+ * Route for admin content overview.
+ */
+$app->router->add("user/admin/content/overview/{status}", function ($status) use ($app) {
+    $allContent = $app->contentDao->getAll("all", $status);
+    $title = $status === "published" ? "Publicerade" : ($status === "nonpublished" ? "Opublicerade" : "Borttagna");
+    $app->renderPage("admin/overview", ["title" => $title, "content" => $allContent]);
+});
+
+
+/**
+ * Route for creating content.
+ */
+$app->router->add("user/admin/content/create", function () use ($app) {
+    if (isset($_POST["create"])) {
+        $id = $app->contentDao->create($app->request->getPost("title"));
+        $app->redirect("user/admin/content/edit/$id");
+    }
+    $app->renderPage("admin/create", ["title" => "Skapa innehåll"]);
+});
+
+
+/**
+ * Route for editing content.
+ */
+$app->router->add("user/admin/content/edit/{id}", function ($id) use ($app) {
+    $contentObj = $app->contentDao->getOne("\Oenstrom\Content\Content", $id);
+    if (isset($_POST["edit"])) {
+        $app->contentDao->update($_POST, $contentObj);
+    }
+    $app->renderPage("admin/edit", ["title" => "Redigera innehåll", "content" => $contentObj]);
+});
+
+
+/**
+ * Route for deleting content.
+ */
+$app->router->add("user/admin/content/delete/{id}", function ($id) use ($app) {
+    $app->contentDao->toggleDeleted($id);
+    $app->redirect("user/admin/content/edit/$id");
 });

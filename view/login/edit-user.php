@@ -21,22 +21,31 @@
                         <input type="date" name="birthday" value="<?= htmlentities($user->get("birthday")) ?>">
                     </label>
                 </div>
-                <div class="form-group">
-                    <label>Biografi
-                        <textarea name="bio"><?= htmlentities($user->get("bio")) ?></textarea>
-                    </label>
-                </div>
-            </div>
 
-            <div class="col-6">
                 <? if($app->request->getRoute() !== "user/edit") : ?>
                     <div class="form-group">
                         <label>Användarnamn *
                             <input type="text" name="username" maxlength="64" value="<?= htmlentities($user->get("username")) ?>">
                         </label>
                     </div>
-                <? endif; ?>
 
+                    <div class="form-group">
+                        <label>Behörighet
+                            <div class="radio-group">
+                                <label><input type="radio" name="authority" value="user"<?= $user->get("authority") === "user" ? " checked" : "" ?>> Användare</label>
+                                <label><input type="radio" name="authority" value="admin"<?= $user->get("authority") === "admin" ? " checked" : "" ?>> Admin</label>
+                            </div>
+                        </label>
+                    </div>
+                <? endif; ?>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Biografi
+                        <textarea name="bio"><?= htmlentities($user->get("bio")) ?></textarea>
+                    </label>
+                </div>
                 <div class="form-group">
                     <label>E-postadress *
                         <input type="email" name="email" maxlength="64" value="<?= htmlentities($user->get("email")) ?>">

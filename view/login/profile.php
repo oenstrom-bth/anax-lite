@@ -18,13 +18,6 @@
 </div>
 
 <div class="col-3">
-    <? if ($app->user->get("authority") === "admin") : ?>
-        <h2>Administration</h2>
-        <ul>
-            <li><a href="<?= $this->url("user/admin/new") ?>">Ny medlem</a></li>
-            <li><a href="<?= $this->url("user/admin/users") ?>">Visa medlemmar</a></li>
-        </ul>
-    <? endif; ?>
     <h3>Cookie-innehåll</h3>
     <p><?= htmlentities($app->cookie->get("username")) ?></p>
 </div>

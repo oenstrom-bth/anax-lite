@@ -1,0 +1,10 @@
+[b]Den här meningen är fet.[/b]
+
+[i]Den här meningen är kursiv.[/i]
+
+[u]Den här meningen är understruken.[/u]
+
+Här är en länk: [url]https://google.com[/url]
+
+
+[code]Här är ett kodblock. Med två extra nyrader innan.[/code]

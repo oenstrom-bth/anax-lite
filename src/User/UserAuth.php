@@ -184,6 +184,7 @@ class UserAuth
      */
     public function displayUsers($search, $order, $page, $hits)
     {
+        $page = $page < 1 ? 1 : $page;
         $orderBy = ["username", "email", "firstname", "lastname", "birthday", "authority", "isBanned"];
         list($order, $dir) = explode(":", $order);
 
@@ -215,7 +216,8 @@ class UserAuth
         $page = (($page - 1) * $hits);
         $users = self::$db->executeFetchAll("SELECT * FROM search_anax_users ORDER BY $order $dir, username $dir LIMIT $hits OFFSET $page;");
         $nrOfUsers = self::$db->executeFetchAll("SELECT COUNT(id) AS rows FROM search_anax_users;");
-        $nrOfPages = ceil($nrOfUsers[0]->rows / $hits);
+        $nrOfUsers = $nrOfUsers[0]->rows < 2 ? 1 : $nrOfUsers[0]->rows;
+        $nrOfPages = ceil($nrOfUsers / $hits);
 
         return [
             "users" => $users,

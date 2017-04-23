@@ -3,69 +3,52 @@
  * Base routes.
  */
 
+
+/**
+ * Route for homepage.
+ */
 $app->router->add("", function () use ($app) {
-    $data = ["title" => "Hem"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/home", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/home", ["title" => "Hem"]);
 });
 
+
+/**
+ * Route for about page.
+ */
 $app->router->add("about", function () use ($app) {
-    $data = ["title" => "Om sidan"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/about", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/about", ["title" => "Om sidan"]);
 });
 
+
+/**
+ * Route for report page.
+ */
 $app->router->add("report", function () use ($app) {
-    $data = ["title" => "Redovisning"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/report", ["region" => "main"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/report", ["title" => "Redovisning"]);
 });
 
+
+/**
+ * Route for dice game.
+ */
 $diceRoute = function ($route = null) use ($app) {
-    $data = ["title" => "Tärningsspel"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/dice", ["region" => "main", "route" => $route], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/dice", ["title" => "Tärningsspel", "route" => $route]);
 };
 $app->router->add("dice", $diceRoute);
 $app->router->add("dice/{route}", $diceRoute);
 
+
+/**
+ * A test route
+ */
 $app->router->add("test", function () use ($app) {
-    $data = ["title" => "Testsida"];
-    $app->view->add("view/layout", $data, "layout");
-
-    $app->view->add("view/flash", ["region" => "flash"], "flash", 0);
-    $app->view->add("view/test", ["region" => "main", "message" => "Hello world"], "main", 0);
-    $app->view->add("view/footer", ["region" => "footer"], "footer", 0);
-
-    $body = $app->view->renderBuffered("layout");
-    $app->response->setBody($body)->send();
+    $app->renderPage("view/test", ["title" => "Testsida", "message" => "Hello world"]);
 });
 
 
+/**
+ * Route for PHP info.
+ */
 $app->router->add("status", function () use ($app) {
     $data = [
         "Server" => php_uname(),
@@ -79,4 +62,63 @@ $app->router->add("status", function () use ($app) {
         ]
     ];
     $app->response->sendJson($data);
+});
+
+
+
+
+/**
+ * Route for testing text filter.
+ */
+$app->router->add("textfilter", function () use ($app) {
+    $app->renderPage("textfilter/textfilter", [
+        "title" => "Textfilter",
+        "markdown" => file_get_contents(ANAX_APP_PATH . "/view/textfilter/markdown.md"),
+        "bbcode" => file_get_contents(ANAX_APP_PATH . "/view/textfilter/bbcode.txt"),
+    ]);
+});
+
+
+/**
+ * Route for testing a page with a block.
+ */
+$app->router->add("page-with-block", function () use ($app) {
+    $app->addBlock("sidebar-links", "sidebar-right", 0);
+    $app->renderPage("view/test", ["title" => "Blogginlägg"]);
+});
+
+
+/**
+ * Route for displaying all blog posts.
+ */
+$app->router->add("blog", function () use ($app) {
+    $contentDao = new \Oenstrom\Content\ContentDao($app->db);
+    $posts = $contentDao->getAll("post", "published", "\Oenstrom\Content\Blog");
+    $app->renderPage("view/blog", ["title" => "Blogginlägg", "posts" => $posts]);
+});
+
+
+/**
+ * Route for displaying a blog post.
+ */
+$app->router->add("blog/{slug}", function ($slug) use ($app) {
+    $contentDao = new \Oenstrom\Content\ContentDao($app->db);
+    $post = $contentDao->getContent("post", $slug);
+    if (!$post) {
+        $app->redirect("404");
+    }
+    $app->renderPage("view/page-post", ["title" => $app->esc($post->title), "content" => $post]);
+});
+
+
+/**
+ * Route for display a db page.
+ */
+$app->router->add("page/{path}", function ($path) use ($app) {
+    $contentDao = new \Oenstrom\Content\ContentDao($app->db);
+    $page = $contentDao->getContent("page", $path);
+    if (!$page) {
+        $app->redirect("404");
+    }
+    $app->renderPage("view/page-post", ["title" => $app->esc($page->title), "content" => $page]);
 });

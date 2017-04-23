@@ -13,17 +13,18 @@ require ANAX_INSTALL_PATH . "/config/error_reporting.php";
 require ANAX_INSTALL_PATH . "/vendor/autoload.php";
 
 // Add all resources to $app
-$app           = new \Oenstrom\App\App();
-$app->request  = new \Anax\Request\Request();
-$app->response = new \Anax\Response\Response();
-$app->url      = new \Anax\Url\Url();
-$app->router   = new \Anax\Route\RouterInjectable();
-$app->view     = new \Anax\View\ViewContainer();
-$app->navbar   = new \Oenstrom\Navbar\Navbar();
-$app->session  = new \Oenstrom\Session\Session();
-$app->cookie   = new \Oenstrom\Session\Cookie();
-$app->db       = new \Anax\Database\DatabaseConfigure();
-$app->form     = new \Oenstrom\Form\Form();
+$app             = new \Oenstrom\App\App();
+$app->request    = new \Anax\Request\Request();
+$app->response   = new \Anax\Response\Response();
+$app->url        = new \Anax\Url\Url();
+$app->router     = new \Anax\Route\RouterInjectable();
+$app->view       = new \Anax\View\ViewContainer();
+$app->navbar     = new \Oenstrom\Navbar\Navbar();
+$app->session    = new \Oenstrom\Session\Session();
+$app->cookie     = new \Oenstrom\Session\Cookie();
+$app->db         = new \Anax\Database\DatabaseConfigure();
+$app->form       = new \Oenstrom\Form\Form();
+$app->textFilter = new \Oenstrom\TextFilter\TextFilter();
 
 $app->session->start();
 

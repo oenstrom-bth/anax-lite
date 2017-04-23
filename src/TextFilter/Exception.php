@@ -1,0 +1,11 @@
+<?php
+
+namespace Oenstrom\TextFilter;
+
+/**
+ * Namespaced exception.
+ */
+class Exception extends \Exception
+{
+
+}

@@ -1,4 +1,9 @@
 .form {
+    &.full-width {
+        .form-group {
+            max-width: 100%;
+        }
+    }
     .form-group {
         width: 100%;
         max-width: 540px;
@@ -30,6 +35,8 @@
         input[type="email"],
         input[type="number"],
         input[type="date"],
+        input[type="time"],
+        input[type="datetime"],
         select,
         textarea {
             background: transparent;
@@ -50,6 +57,16 @@
         .radio-group {
             display: block;
             padding-top: 10px;
+        }
+        .datetime {
+            display: flex;
+
+            input[type="date"] {
+                flex: 3;
+            }
+            input[type="time"] {
+                flex: 1;
+            }
         }
     }
 }
