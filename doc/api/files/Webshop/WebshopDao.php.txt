@@ -1,0 +1,150 @@
+<?php
+
+namespace Oenstrom\Webshop;
+
+/**
+ * Class for accessing Webshop information in the database.
+ */
+class WebshopDao
+{
+    /**
+     * @var Database         $db the database object.
+     */
+    private $db;
+
+
+    /**
+     * Constructor creating a Webshop data access object.
+     *
+     * @param object $db Database object.
+     */
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
+
+    /**
+     * Get all prodcuts.
+     *
+     * @return array as the list of all products.
+     */
+    public function getAllProducts()
+    {
+        return $this->db->executeFetchAll("SELECT * FROM VProdCatInv;");
+    }
+
+
+    /**
+     * Get all categories.
+     *
+     * @return array as the list of all categories.
+     */
+    public function getAllCategories()
+    {
+        return $this->db->executeFetchAll("SELECT * FROM ProdCategory;");
+    }
+
+
+    /**
+     * Get a single product.
+     *
+     * @param int $id The product id.
+     * @return object as the product.
+     */
+    public function getProduct($id)
+    {
+        return $this->db->executeFetchAll("SELECT * FROM VProdCatInv WHERE id = ?;", [$id])[0];
+    }
+
+
+    /**
+     * Create a new product.
+     *
+     * @param array $input The values to insert.
+     */
+    public function createProduct($input)
+    {
+        $image = empty($input["image"]) ? "products/no-image.png" : $input["image"];
+        $this->db->execute("INSERT INTO Product(description, image, price) VALUES(?, ?, ?);", [$input["description"], $image, $input["price"]]);
+        $productID = $this->db->lastInsertId();
+        $this->db->execute("INSERT INTO Inventory(product_id, amount) VALUES(?, ?);", [$productID, $input["amount"]]);
+        $categories = isset($input["categories"]) ? $input["categories"] : [];
+        $this->setProductCategoryLinks($categories, $productID);
+    }
+
+
+    /**
+     * Update a product.
+     *
+     * @param array $input The values to update with.
+     * @param int $productID The id of the product.
+     */
+    public function updateProduct($input, $productID)
+    {
+        $params = [$input["description"], $input["image"], $input["price"], $productID];
+        $this->db->execute("UPDATE Product SET description = ?, image = ?, price = ? WHERE id = ?;", $params);
+        $this->db->execute("UPDATE Inventory SET amount = ? WHERE id = ?;", [$input["amount"], $productID]);
+
+        $categories = isset($input["categories"]) ? $input["categories"] : [];
+        $this->db->execute("DELETE FROM Prod2Cat WHERE product_id = ?;", [$productID]);
+        $this->setProductCategoryLinks($categories, $productID);
+    }
+
+
+    /**
+     * Delete a product.
+     *
+     * @param int $id The product id.
+     */
+    public function deleteProduct($id)
+    {
+        $this->db->execute("UPDATE Product SET deleted = CURRENT_TIMESTAMP WHERE id = ?;", [$id]);
+    }
+
+
+    /**
+     * Create a new category.
+     *
+     * @param string $name The category name.
+     */
+    public function createCategory($name)
+    {
+        $this->db->execute("INSERT INTO ProdCategory(category) VALUES(?);", [$name]);
+    }
+
+
+    /**
+     * Update a category.
+     *
+     * @param int $id The category id.
+     * @param string $name The category name.
+     */
+    public function updateCategory($id, $name)
+    {
+        $this->db->execute("UPDATE ProdCategory SET category = ? WHERE id = ?;", [$name, $id]);
+    }
+
+
+    /**
+     * Update product and category association.
+     *
+     * @param array $categoryIds The category ids to use.
+     * @param int $productId The product id.
+     */
+    private function setProductCategoryLinks($categoryIds, $productId)
+    {
+        $params = [];
+        $values = "";
+        foreach ($categoryIds as $categoryId) {
+            $values .= "(?, ?), ";
+            $params[] = $productId;
+            $params[] = $categoryId;
+        }
+        $values = rtrim($values, ", ");
+        if ($categoryIds) {
+            $this->db->execute("INSERT INTO Prod2Cat(product_id, category_id) VALUES $values;", $params);
+        }
+    }
+}
+

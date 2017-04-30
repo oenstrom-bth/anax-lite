@@ -270,3 +270,98 @@ $app->router->add("user/admin/content/delete/{id}", function ($id) use ($app) {
     $app->contentDao->toggleDeleted($id);
     $app->redirect("user/admin/content/edit/$id");
 });
+
+
+
+/**
+ * Route for webshop backend.
+ */
+$app->router->add("user/admin/shop/**", function () use ($app) {
+    $app->shop = new \Oenstrom\Webshop\WebshopDao($app->db);
+    $app->view->add("admin/shop/sidebar-links", ["region" => "sidebar-right"], "sidebar-right", 0);
+});
+
+
+/**
+ * Route for displaying products.
+ */
+$app->router->add("user/admin/shop", function () use ($app) {
+    $app->renderPage("admin/shop/products", ["title" => "Produkter", "products" => $app->shop->getAllProducts()]);
+});
+
+
+/**
+ * Route for creating product.
+ */
+$app->router->add("user/admin/shop/create/product", function () use ($app) {
+    if (isset($_POST["submitProduct"])) {
+        $app->shop->createProduct($_POST);
+        flash("success", "Produkten har skapats.");
+        $app->redirect("user/admin/shop");
+    }
+
+    $categories = $app->shop->getAllCategories();
+    $app->renderPage("admin/shop/product-form", [
+        "title" => "Skapa produkt",
+        "categories" => ["allCategories" => $categories, "checked" => []]
+    ]);
+});
+
+
+/**
+ * Route for editing a product.
+ */
+$app->router->add("user/admin/shop/edit/product/{id}", function ($id) use ($app) {
+    if (isset($_POST["submitProduct"])) {
+        $app->shop->updateProduct($_POST, $id);
+        flash("success", "Produkten har uppdaterats.");
+        $app->redirect("user/admin/shop");
+    }
+
+    $categories  = $app->shop->getAllCategories();
+    $product     = $app->shop->getProduct($id);
+
+    $app->renderPage("admin/shop/product-form", [
+        "title" => "Redigera produkt",
+        "edit" => true,
+        "product" => $product,
+        "categories" => ["allCategories" => $categories, "checked" => explode(",", $product->category)]
+    ]);
+});
+
+
+/**
+ * Route for deleteing a product
+ */
+$app->router->add("user/admin/shop/delete/product/{id}", function ($id) use ($app) {
+    $app->shop->deleteProduct($id);
+    flash("success", "Produkten togs bort.");
+    $app->redirect("user/admin/shop");
+});
+
+
+/**
+ * Route for creating category.
+ */
+$app->router->add("user/admin/shop/create/category", function () use ($app) {
+    if (isset($_POST["submitCategory"])) {
+        $app->shop->createCategory($_POST["category"]);
+        flash("success", "Kategorien har skapats.");
+        $app->redirect("user/admin/shop");
+    }
+    $app->renderPage("admin/shop/category-form", ["title" => "Skapa kategori"]);
+});
+
+
+/**
+ * Route for updating category.
+ */
+$app->router->add("user/admin/shop/update/category", function () use ($app) {
+    if (isset($_POST["submitCategory"])) {
+        $app->shop->updateCategory($_POST["id"], $_POST["category"]);
+        flash("success", "Kategorien har uppdaterats.");
+        $app->redirect("user/admin/shop");
+    }
+    $categories = $app->shop->getAllCategories();
+    $app->renderPage("admin/shop/category-form", ["title" => "Redigera kategori", "categories" => $categories]);
+});

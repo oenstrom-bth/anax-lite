@@ -2,15 +2,20 @@
 
 namespace Oenstrom\Session;
 
+/**
+ * Class for cookie handling.
+ */
 class Cookie
 {
+    /**
+     * @var integer  $expire the expiration time in seconds.
+     */
     private $expire;
 
 
     /**
      * Constructor
-     * Sets $expire to 30 days. 86400 = 1 day * 30 = 30 days
-     * @return void
+     * @param integer $time Sets $expire to 30 days. 86400 = 1 day * 30 = 30 days
      */
     public function __construct($time = 86400*30)
     {
@@ -31,7 +36,7 @@ class Cookie
 
     /**
      * Sets a cookie
-     * @param $name string The name of the $_COOKIE
+     * @param $key string The name of the $_COOKIE
      * @param $val string The value of the $_COOKIE
      * @return void
      */

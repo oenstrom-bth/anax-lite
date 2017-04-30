@@ -1,0 +1,170 @@
+<?php
+
+namespace Oenstrom\Form;
+
+/**
+ * Class for validating forms.
+ */
+class Form
+{
+    /**
+     * Sets the callable to use for connecting to a database.
+     *
+     * @param callable $connect to connect to database.
+     */
+    public function setDbConnect($connect)
+    {
+        $this->dbConnect = $connect;
+    }
+
+
+    /**
+     * Sets the callable to use for executing SQL query.
+     *
+     * @param callable $execute to execute SQL.
+     */
+    public function setDbExecuteFetchAll($execute)
+    {
+        $this->dbExecuteFetchAll = $execute;
+    }
+
+
+    /**
+     * Check that all $fields are filled out.
+     *
+     * @param array $fields The array of all input fields.
+     * @param array $required The array of required fields.
+     *
+     * @return bool True if all fields are filled.
+     */
+    public function isFilled($fields, $required)
+    {
+        foreach ($required as $key) {
+            if (!isset($fields[$key]) || $fields[$key] == "") {
+                $_SESSION["message"] = ["error", "Fyll i alla fält markerade med en stjärna."];
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Simple form validation.
+     *
+     * @param array $fields The array of all input fields.
+     * @param array $validation The array containing validation info.
+     *
+     * @return bool True if all fields validate.
+     */
+    public function validate($fields, $validation)
+    {
+        call_user_func($this->dbConnect);
+        foreach ($validation as $key => $val) {
+            $types = explode(",", $val);
+
+            foreach ($types as $type) {
+                list($type, $option) = explode(":", $type);
+
+                if (call_user_func([$this, $type], $option, $fields, $key) === false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Check that two fields are equal.
+     *
+     * @param string $option The field to compare against.
+     * @param array $fields POST data
+     * @param string $key The field in the POST data.
+     *
+     * @return bool|void False if not equal.
+     */
+    public function same($option, $fields, $key)
+    {
+        if ($fields[$key] !== $fields[$option]) {
+            $_SESSION["message"] = ["error", htmlentities("Fälten '{$key}' och '{$option}' stämmer inte överens.")];
+            return false;
+        }
+    }
+
+
+    /**
+     * Check the correct password.
+     *
+     * @param numeric $option The id to get password from.
+     * @param array $fields POST data
+     * @param string $key The field in the POST data.
+     *
+     * @return bool|void False if not correct password.
+     */
+    public function password($option, $fields, $key)
+    {
+        $res = call_user_func(
+            $this->dbExecuteFetchAll,
+            "SELECT password FROM anax_users WHERE id = :id;",
+            [":id" => $option]
+        )[0];
+
+        if (!password_verify($fields[$key], $res->password)) {
+            $_SESSION["message"] = ["error", "Fel lösenord."];
+            return false;
+        }
+    }
+
+
+    /**
+     * Check that its a valid email.
+     *
+     * @param string $option The option.
+     * @param array $fields POST data
+     * @param string $key The field in the POST data.
+     *
+     * @return bool|void False if not valid email.
+     */
+    public function email($option, $fields, $key)
+    {
+        if (!filter_var($fields[$key], FILTER_VALIDATE_EMAIL) && $option !== "") {
+            $_SESSION["message"] = ["error", "Fyll i en riktig e-postadress."];
+            return false;
+        }
+    }
+
+
+    /**
+     * Check that the field is unique.
+     *
+     * @param string $option The column to check in.
+     * @param array $fields POST data
+     * @param string $key The field in the POST data.
+     *
+     * @return bool|void False if not equal.
+     */
+    public function unique($option, $fields, $key)
+    {
+        $current = explode("#", $option);
+        if (count($current) > 1) {
+            $option = $current[0];
+            $current = $current[1];
+        }
+        if ($fields[$key] === $current) {
+            return true;
+        }
+
+        $res = call_user_func(
+            $this->dbExecuteFetchAll,
+            "SELECT id FROM anax_users WHERE $option = :column;",
+            [":column" => $fields[$key]]
+        );
+
+        if (count($res) > 0) {
+            $_SESSION["message"] = ["error", htmlentities("Det finns redan någon registrerad med: {$fields[$key]}")];
+            return false;
+        }
+    }
+}
+

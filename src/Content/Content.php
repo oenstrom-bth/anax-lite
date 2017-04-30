@@ -2,8 +2,24 @@
 
 namespace Oenstrom\Content;
 
+/**
+ * Content class for general content.
+ */
 class Content
 {
+    /**
+     * @var integer         $id the content id
+     * @var string          $path the content path
+     * @var string          $slug the content slug
+     * @var string          $title the content title
+     * @var string          $data the content text
+     * @var string          $type the content type
+     * @var string          $filter the content text filter
+     * @var datetime        $published time of publish
+     * @var datetime        $created time created
+     * @var datetime        $updated time of the latest update
+     * @var datetime        $deleted time deleted
+     */
     protected $id;
     protected $path;
     protected $slug;

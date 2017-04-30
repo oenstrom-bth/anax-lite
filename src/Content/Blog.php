@@ -2,6 +2,9 @@
 
 namespace Oenstrom\Content;
 
+/**
+ * Blog class for blog posts.
+ */
 class Blog extends Content
 {
     /**

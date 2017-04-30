@@ -26,6 +26,10 @@
         label {
             display: block;
             margin-top: 10px;
+
+            label {
+                font-size: 14px;
+            }
         }
         select {
             margin-top: 10px;
@@ -54,6 +58,35 @@
                 outline: none;
             }
         }
+
+        input[type="checkbox"] {
+            display: none;
+
+            & + span::before {
+                content: "check_box_outline_blank";
+                font-family: 'Material Icons';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 24px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                white-space: nowrap;
+                word-wrap: normal;
+                direction: ltr;
+                -webkit-font-feature-settings: 'liga';
+                -webkit-font-smoothing: antialiased;
+                vertical-align: middle;
+            }
+            &:checked {
+                & + span::before {
+                    content: "check_box";
+                    color: @link-color;
+                }
+            }
+        }
+
         .radio-group {
             display: block;
             padding-top: 10px;

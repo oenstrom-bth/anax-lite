@@ -88,7 +88,21 @@
         <hr>
 
         <h2 id="kmom05">Kmom05</h2>
-        <p>Redovisningstext för kmom05 här.</p>
+        <h3>Gick det bra att komma igång med det vi kallar programmering av databas, med transaktioner, lagrade procedurer, triggers, funktioner?</h3>
+        <p>Har aldrig programmerat på det sättet i en databas tidigare, knappt sett det faktiskt. Så det var helt nytt för mig. Trots det tycker jag att det gick bra att komma igång med det.</p>
+
+        <h3>Hur är din syn på att programmera på detta viset i databasen?</h3>
+        <p>Har använt MySQL ett antal gånger tidigare men aldrig kommit in på att programmera på detta sättet. Jag tycker det kändes riktigt smidigt och bra. Det underlättar väldigt mycket om du inte behöver skriva allting i PHP eller det språk du nu använder.</p>
+
+        <h3>Några reflektioner kring din kod för backenden till webbshopen?</h3>
+        <p>Det blev inte att jag lade så mycket tid på just PHP-biten i backenden. Detta då att koda SQL på det här sättet var nytt för mig, vilket gjorde att det gick lite mer tid där. Med mer tid hade jag förbättrat PHP-delen, men allt fungerar åtminstone som det ska.</p>
+        <p>Jag valde att fokusera lite mer på krav 5, 6 och 7 då det är vad kursmomentet handlar om. Till kundvagnen använder jag tre procedurer vilket gör användandet enkelt. En för att lägga till i kundvagnen, en för att ta bort och en för att visa. På samma sätt hanterar jag en order. Tre procedurer, skapa, ta bort och visa. För att skapa en order loopas en kundvagns innehåll igenom och läggs till i ordern, samtidigt tas produkterna bort från lagret. Tar man bort en order så markeras den som borttagen, den försvinner ej, och produkterna åker tillbaka till lagret. Många av procedurerna innehåller transaktioner.</p>
+        <p>För att enkelt få reda på lagersaldot av en produkt gjorde jag en egendefinierad funktion som hämtar ut det. Det gör det väldigt enkelt att hämta ut lagret samtidigt som man gör en SELECT-sats på produkter.</p>
+        <p>Lagerrapporten hanteras av en trigger på “Inventory”-tabellen som sker efter en UPDATE. Är det nya lagersaldot av produkten under 5 så läggs det in en rad i tabellen “InventoryLog”. Proceduren “getInventoryLog” hämtar sedan ut den loggen. Här borde man kanske ha något bättre sätt att markera vilka produkter vars lager har blivit påfyllt igen. Men det fungerar ändå helt okej som det är just nu.</p>
+        <p>Över lag är jag nöjd trots att jag aldrig har gjort det tidigare och som sagt lade jag mest tid på krav 5, 6, 7 och inte så mycket på PHP-delen.</p>
+
+        <h3>Något du vill säga om koden generellt i och kring Anax Lite?</h3>
+        <p>Jag känner ofta att det är saker som borde gå att göra bättre och jag hade gärna försökt förbättra det själv. Det som hindrar mig är tiden. Kursen har tagit upp mycket tid vilket har gjort att jag varken har haft tid eller ork att riktigt dyka ner djupare i koden. Men jag försöker förbättra och ändra så mycket jag hinner och orkar.</p>
 
         <hr>
 

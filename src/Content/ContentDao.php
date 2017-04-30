@@ -2,10 +2,22 @@
 
 namespace Oenstrom\Content;
 
+/**
+ * Class for accessing the content table.
+ */
 class ContentDao
 {
+    /**
+     * @var Database         $db the database object.
+     */
     protected $db;
 
+
+    /**
+     * Constructor creating a Content data access object.
+     *
+     * @param object $db Database object.
+     */
     public function __construct($db)
     {
         $this->db = $db;
@@ -13,6 +25,13 @@ class ContentDao
     }
 
 
+    /**
+     * Get content based on type.
+     *
+     * @param string $type the type of content.
+     * @param string $str the slug or path.
+     * @return array with resultset.
+     */
     public function getContent($type, $str)
     {
         switch ($type) {
@@ -35,6 +54,13 @@ class ContentDao
     }
 
 
+    /**
+     * Get one type of content.
+     *
+     * @param string $type which type to get.
+     * @param integer $id the content id.
+     * @return array with resultset.
+     */
     public function getOne($type, $id)
     {
         $this->db->execute("SELECT * FROM anax_content WHERE id = ?", [$id]);
@@ -43,6 +69,14 @@ class ContentDao
     }
 
 
+    /**
+     * Get all content of a type and status.
+     *
+     * @param string $type which type to get.
+     * @param string $status the status of the content.
+     * @param string $class the class to use.
+     * @return array with resultset.
+     */
     public function getAll($type = "all", $status = "published", $class = "\Oenstrom\Content\Content")
     {
         switch ($status) {
@@ -79,6 +113,12 @@ class ContentDao
     }
 
 
+    /**
+     * Create new content.
+     *
+     * @param string $title the content title.
+     * @return integer the last insert id.
+     */
     public function create($title)
     {
         $this->db->execute("INSERT INTO anax_content (title) VALUES (?)", [$title]);
@@ -87,6 +127,13 @@ class ContentDao
     }
 
 
+    /**
+     * Update content.
+     *
+     * @param array $fields the values to update with.
+     * @param Content $contentObj the content object to update.
+     * @return bool success or not.
+     */
     public function update($fields, $contentObj)
     {
         // $this->content->update($fields);
@@ -128,6 +175,11 @@ class ContentDao
     }
 
 
+    /**
+     * Toggle deletion of content.
+     *
+     * @param integer $id the content id.
+     */
     public function toggleDeleted($id)
     {
         //$contentObj = $this->getOne($id);
@@ -142,9 +194,10 @@ class ContentDao
 
 
     /**
-     * Check if the path is taken or not.
+     * Check if the path or slug is taken.
      *
-     * @param string $path the path to check.
+     * @param string $type the type to check.
+     * @param string $value the path or slug.
      * @param int $id the id of the content.
      * @return bool as taken or not.
      */

@@ -2,8 +2,22 @@
 
 namespace Oenstrom\User;
 
+/**
+ * Class for handling a user.
+ */
 class User
 {
+    /**
+     * @var integer         $id The user's id
+     * @var string          $authority The user's authority
+     * @var string          $username The user's username
+     * @var string          $password The user's password
+     * @var string          $firstname The user's firstname
+     * @var string          $lastname The user's lastname
+     * @var string          $email The user's email
+     * @var date            $birthday the user's birthday
+     * @var string          $bio The user's biography.
+     */
     private $id;
     private $authority;
     private $username;
@@ -61,9 +75,9 @@ class User
     /**
      * Get a Gravatar URL for the user email address.
      *
-     * @param string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
-     * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-     * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
+     * @param string $size Size in pixels, defaults to 80px [ 1 - 2048 ]
+     * @param string $default Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+     * @param string $rating Maximum rating (inclusive) [ g | pg | r | x ]
      *
      * @return String containing either just a URL or a complete image tag
      * @source https://gravatar.com/site/implement/images/php/

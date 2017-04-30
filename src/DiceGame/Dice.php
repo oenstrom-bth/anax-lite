@@ -2,8 +2,16 @@
 
 namespace Oenstrom\DiceGame;
 
+/**
+ * Class representing a dice.
+ */
 class Dice
 {
+    /**
+     * @var integer $faces the number of faces of the dice.
+     * @var array $rolls the rolls made.
+     * @var integer $lastRoll the last roll made.
+     */
     private static $faces = 6;
     private $rolls = [];
     private $lastRoll = null;
@@ -23,6 +31,9 @@ class Dice
     }
 
 
+    /**
+     * Empty the rolls.
+     */
     public function emptyRolls()
     {
         $this->rolls = [];

@@ -2,8 +2,17 @@
 
 namespace Oenstrom\DiceGame;
 
+/**
+ * Class for handling the Dice game.
+ */
 class Game
 {
+    /**
+     * @var integer $player the player "id".
+     * @var Round $round Round object.
+     * @var array $playerList List of players.
+     * @var string $winner The winner.
+     */
     private $player;
     private $round;
     private $playerList;
@@ -13,7 +22,7 @@ class Game
     /**
      * Constructor
      *
-     * @return self
+     * @param integer $number The number of players.
      */
     public function __construct($number = 2)
     {

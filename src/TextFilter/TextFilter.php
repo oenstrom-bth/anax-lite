@@ -2,8 +2,14 @@
 
 namespace Oenstrom\TextFilter;
 
+/**
+ * Class for text formatting and filtering.
+ */
 class TextFilter
 {
+    /**
+     * @var array   $validFilters the valid filters.
+     */
     private $validFilters = [
         "nl2br" => "nl2br",
         "bbcode" => "bbcode2html",

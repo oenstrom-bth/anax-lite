@@ -59,27 +59,13 @@ return [
                         ],
                     ],
                 ],
-                "test3" => [
-                    "text" => "Test 3",
-                    "route" => "test/3",
+                "kmom05" => [
+                    "text" => "Kmom05",
+                    "route" => "#",
                     "items" => [
-                        "test3-1" => [
-                            "text" => "Test 3.1",
-                            "route" => "test/3/1",
-                        ],
-                        "test3-2" => [
-                            "text" => "Test 3.2",
-                            "route" => "test/3/2",
-                            "items" => [
-                                "test3-2-1" => [
-                                    "text" => "Test 3.2.1",
-                                    "route" => "test/3/2/1",
-                                ],
-                                "test3-2-2" => [
-                                    "text" => "Test 3.2.2",
-                                    "route" => "test/3/2/2",
-                                ],
-                            ],
+                        "shop" => [
+                            "text" => "Webbshop",
+                            "route" => "user/admin/shop",
                         ],
                     ],
                 ],

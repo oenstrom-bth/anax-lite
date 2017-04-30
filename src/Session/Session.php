@@ -2,15 +2,20 @@
 
 namespace Oenstrom\Session;
 
+/**
+ * Class for session handling.
+ */
 class Session
 {
+    /**
+     * @var string $name the session name.
+     */
     private $name;
 
 
     /**
      * Constructor
      * @param string $name (optional) The name of the session
-     * @return void
      */
     public function __construct($name = "olen16-anax-session")
     {

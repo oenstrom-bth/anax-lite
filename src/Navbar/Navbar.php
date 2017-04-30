@@ -2,13 +2,20 @@
 
 namespace Oenstrom\Navbar;
 
+/**
+ * Class for creating the navbar.
+ */
 class Navbar implements \Anax\Common\AppInjectableInterface, \Anax\Common\ConfigureInterface
 {
     use \Anax\Common\AppInjectableTrait;
     use \Anax\Common\ConfigureTrait;
 
-    private $currentRoute = "";
-    private $createUrl = null;
+    /**
+     * @var string         $currentRoute the current route.
+     * @var callable       $createUrl the callable for creating url.
+     */
+    private $currentRoute;
+    private $createUrl;
 
 
     /**

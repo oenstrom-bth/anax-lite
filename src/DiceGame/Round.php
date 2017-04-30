@@ -2,15 +2,20 @@
 
 namespace Oenstrom\DiceGame;
 
+/**
+ * Class for handling a round in the Dice game.
+ */
 class Round
 {
+    /**
+     * @var Dice $dice the dice object.
+     */
     private $dice;
 
 
     /**
      * Constructor
      *
-     * @return self
      */
     public function __construct()
     {
@@ -18,6 +23,9 @@ class Round
     }
 
 
+    /**
+     * Start a new round.
+     */
     public function newRound()
     {
         $this->dice->emptyRolls();

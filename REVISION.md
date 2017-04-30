@@ -1,6 +1,12 @@
 Revision History
 =======================
 
+5.0.0 (2017-04-23)
+-----------------------
+* Webshop backend.
+* Webshop SQL.
+* PHPDoc.
+
 4.0.0 (2017-04-23)
 -----------------------
 * Content module.

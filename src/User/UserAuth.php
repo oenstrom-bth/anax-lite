@@ -7,10 +7,20 @@ namespace Oenstrom\User;
  */
 class UserAuth
 {
+    /**
+     * @var Database  $db database object.
+     * @var Form      $form form validation object.
+     */
     private static $db;
     private static $form;
 
 
+    /**
+     * Constructor creating a object for accessing user info.
+     *
+     * @param Database $db Database object.
+     * @param Form $form Form object.
+     */
     public function __construct($db, $form)
     {
         self::$db = $db;
