@@ -107,7 +107,24 @@
         <hr>
 
         <h2 id="kmom06">Kmom06</h2>
-        <p>Redovisningstext för kmom06 här.</p>
+        <h3>Vad du bekant med begreppet index i databaser sedan tidigare?</h3>
+        <p>Ja det får jag ändå säga att jag är. Det jag är mest bekant med är unika index. Jag har använt det men inte riktigt vetat hur det fungerar med frågeoptimeraren. Så uppgiften och övningen gav bra och nyttig insyn i hur det fungerar och inte bara hur man använder det.</p>
+
+        <h3>Berätta om hur du jobbade i uppgiften om index och vilka du valde att lägga till och skillnaden före/efter.</h3>
+        <p>Jag gick igenom all min SQL-kod för att leta efter passande kandidater till index. Jag var tveksam till om jag skulle hitta några attribut att indexera, då de flesta SELECT-satser redan använde sig av indexerade attribut. Till exempel använder jag redan unika index på “username” och “email” i “anax_users”-tabellen. I “anax_content”-tabellen använder jag också unika index på “slug” och “path”.</p>
+        <p>Efter att ha tittat igenom “anax_content”-tabellen lyckades jag hitta tre stycken att indexera. Den första var “type”. Gjorde jag en SELECT-sats för att hämta ut allt innehåll av typen “block” blev det en full table scan när det är endast en rad av typen “block”. Efter att indexet skapades behövde frågeoptimeraren endast gå igenom en rad, precis det man är ute efter.</p>
+        <p>Det andra och tredje indexet blev på “published” och “deleted” i samma tabell. SELECT-satsen som hämtar ut allt publicerat innehåll av en viss typ gjorde, innan indexeringen, en full table scan. Den hade dock redan förbättrats lite av indexet på “type”-attributen, nu 9 av 15 rader, men det är däremot bara tre rader som returneras. Med index på “published” och “deleted” fick jag ner det till 7 rader, det är i alla fall under hälften till skillnad mot utan index. En sak att nämna är att det för tillfället inte går snabbare att använda index här. Då databasen är så liten så går det snabbare att endast använda indexet på “type”-attributen istället för “published” och “deleted”. Men detta är något som kommer ändras på en riktigt stor databas med massor av rader i tabellen, där indexet kommer förbättra prestandan.</p>
+
+        <h3>Har du tidigare erfarenheter av att skriva kod som testar annan kod?</h3>
+        <p>Jag har jobbat lite med det i en tidigare kurs, närmare bestämt kursen “oopython”. Det var dock bara en väldigt liten del av kursen, så jag har inte särskilt stora erfarenheter av kod som testar annan kod.</p>
+
+        <h3>Hur ser du på begreppet enhetstestning och att skriva testbar kod?</h3>
+        <p>Det här kursmomentet hjälpte mig faktiskt se mer nytta med enhetstestning och att skriva testbar kod. Mos föreläsning om enhetstestning tycker jag var riktigt bra för att få bättre förståelse till varför man bör göra enhetstester.</p>
+        <p>Innan har jag alltid tyckt att enhetstestning känns onödigt och slöseri med tid. Men som sagt börjar jag nu förstå hur viktigt det faktiskt är och något man bör göra trots att det kanske inte är det roligaste att göra.</p>
+
+        <h3>Hur gick det att hitta testbar kod bland dina klasser i Anax Lite?</h3>
+        <p>Det var lite knepigt att hitta klasser som inte hade allt för många beroenden av andra klasser och som var tillräckligt lättestade. Jag valde att testa min “DiceGame”-modul som innehåller tre klasser och min “TextFilter”modul med en klass. Jag gjorde i princip ett testfall för varje metod i klasserna. Det kan vara något enstaka testfall som testar mer än en metod. Kodtäckningen fick jag upp till 100% i båda modulerna.</p>
+        <p>Att skriva enhetstester hjälpte mig faktiskt att se hur jag bör ändra och skriva min kod i framtiden för att lättare testa den. Så ett bra kursmoment som både lärde mig enhetstestning och hur jag kan förbättra min kod.</p>
 
         <hr>
 

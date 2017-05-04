@@ -5,7 +5,7 @@ namespace Oenstrom\TextFilter;
 /**
  * Namespaced exception.
  */
-class Exception extends \Exception
+class FilterException extends \Exception
 {
 
 }

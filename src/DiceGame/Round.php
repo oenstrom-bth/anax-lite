@@ -35,11 +35,12 @@ class Round
     /**
      * Roll the dice.
      *
+     * @param integer $roll The roll if not null.
      * @return bool as valid roll.
      */
-    public function roll()
+    public function roll($roll = null)
     {
-        $roll = $this->dice->roll();
+        $roll = $this->dice->roll($roll);
         if ($roll == 1) {
             return false;
         }

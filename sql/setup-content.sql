@@ -18,7 +18,11 @@ filter					VARCHAR(80) DEFAULT NULL,
 published			DATETIME DEFAULT NULL,
 created			TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 updated			DATETIME DEFAULT NULL,
-deleted			DATETIME DEFAULT NULL
+deleted			DATETIME DEFAULT NULL,
+
+KEY `index_type` (`type`),
+KEY `index_published` (`published`),
+KEY `index_deleted` (`deleted`)
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
 

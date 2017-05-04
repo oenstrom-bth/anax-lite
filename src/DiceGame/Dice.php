@@ -20,11 +20,12 @@ class Dice
     /**
      * Roll the dice.
      *
+     * @param int $roll The roll if not null.
      * @return int as the roll;
      */
-    public function roll()
+    public function roll($roll = null)
     {
-        $roll = rand(1, self::$faces);
+        $roll = is_null($roll) ? rand(1, self::$faces) : $roll;
         $this->rolls[] = $roll;
         $this->lastRoll = $roll;
         return $roll;

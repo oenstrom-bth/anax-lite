@@ -50,7 +50,7 @@ class TextFilter
     {
         $filters = explode(",", $filters);
         if (array_diff($filters, array_keys($this->validFilters))) {
-            throw new Exception("Invalid filters.", 1);
+            throw new FilterException("Invalid filters.", 1);
         }
         return $filters;
     }

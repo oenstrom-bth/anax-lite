@@ -1,6 +1,11 @@
 Revision History
 =======================
 
+6.0.0 (2017-05-04)
+-----------------------
+* Unittesting.
+* Database indexes.
+
 5.0.0 (2017-04-23)
 -----------------------
 * Webshop backend.

@@ -68,14 +68,14 @@ class Game
      *
      * @param string as the route.
      */
-    public function handle($route)
+    public function handle($route, $roll = null)
     {
         $sameRound = true;
 
         if ($route == "reset") {
             $this->__construct(count($this->playerList));
         } else if ($route == "roll") {
-            $sameRound = $this->round->roll();
+            $sameRound = $this->round->roll($roll);
         } else if ($route == "save") {
             $score = $this->getCurrentScore();
             if ($score > 0) {
@@ -114,6 +114,7 @@ class Game
                 return true;
             }
         }
+        return false;
     }
 
 

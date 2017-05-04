@@ -199,7 +199,7 @@ CREATE FUNCTION Amount(
 	product INT
 )
 RETURNS INT
-RETURN (SELECT amount FROM Product AS P INNER JOIN Inventory AS Inv ON Inv.product_id = P.id WHERE P.id = product);
+RETURN (SELECT amount FROM Inventory WHERE product_id = product);
 
 
 
